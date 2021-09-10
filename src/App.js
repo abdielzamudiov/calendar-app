@@ -1,9 +1,9 @@
 import './App.css';
 import { DaysTable } from './components/DaysTable';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled  from 'styled-components'
 
-import { nextMonth, nextYear, prevMonth, prevYear } from './redux/actions'
+import { Selector } from './components/Selector';
 
 
 const Container = styled.section`
@@ -30,6 +30,7 @@ function App() {
     <Container>
       <MonthName>{month.name}</MonthName>
       <YearText>{year}</YearText>
+      <Selector/>
       <DaysTable weeks={month.weeks}/>
     </Container>
   );
