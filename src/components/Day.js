@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectDate } from '../redux/actions';
+import { discardDate, PREV_MONTH, selectDate } from '../redux/actions';
 
 const DayTd = styled.td`
   padding: 2rem;
@@ -9,10 +9,16 @@ const DayTd = styled.td`
 `;
 
 const Selected = styled.span`
+  padding: 5px 10px 5px 10px;
   background-color: red;
   color: white;
   border-radius: 1rem;
 `;
+
+const NotSelected = styled.span`
+  padding: 5px 10px 5px 10px;
+`;
+
 
 export const Day = ({ day }) => {
 
@@ -25,16 +31,18 @@ export const Day = ({ day }) => {
 
   const notInMonth = day.getMonth() !== month ? "grey" : null;
 
+  const handleClick = () => {
+    selectedDate?.toLocaleDateString() === day.toLocaleDateString() 
+      ? dispatch(discardDate())
+      : dispatch(selectDate(day));
+  };
+
   return (
-    <DayTd onClick={() => {
-      dispatch(selectDate(day));
-      console.log("sies", day)
-    }
-    } style={{opacity: weekend, backgroundColor: notInMonth}}>
+    <DayTd onClick={() => handleClick()} style={{opacity: weekend, backgroundColor: notInMonth}}>
       {
-        selectedDate.toLocaleDateString() === day.toLocaleDateString() 
+        selectedDate?.toLocaleDateString() === day.toLocaleDateString() 
           ? <Selected>{day.getDate()}</Selected>
-          : <span>{day.getDate()}</span>
+          : <NotSelected>{day.getDate()}</NotSelected>
       }
     </DayTd>
   )

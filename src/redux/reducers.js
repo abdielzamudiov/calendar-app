@@ -115,7 +115,7 @@ export const reducer  = (state, action) => {
     case DISCARD_DATE: {
       return {
         ...state,
-        selectDate: null
+        selectedDate: null
       }
     }
 
