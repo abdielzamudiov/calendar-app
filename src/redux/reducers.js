@@ -1,4 +1,6 @@
-import { NEXT_MONTH, NEXT_YEAR, PREV_MONTH, PREV_YEAR } from './actions'
+import { DISCARD_DATE, NEXT_MONTH, NEXT_YEAR, PREV_MONTH, PREV_YEAR, selectDate, SELECT_DATE, TODAY_DATE } from './actions'
+import { getWeeks } from '../helpers/Helpers'
+import { initialState } from '../helpers/Helpers'
 
 export const reducer  = (state, action) => {
   switch (action.type) {
@@ -10,7 +12,13 @@ export const reducer  = (state, action) => {
           month: {
             index: 0,
             name: new Date(state.year + 1, 0).toLocaleDateString("default", { month: "long"}),
-            days: 32 - new Date(state.year + 1, 0, 32).getDate()
+            days: 32 - new Date(state.year + 1, 0, 32).getDate(),
+            weeks: getWeeks(
+              (new Date(state.year + 1, 0)).getDay(),
+              32 - new Date(state.year + 1, 0, 32).getDate(),
+              state.year + 1,
+              0
+            )
           }
         }
       }
@@ -19,7 +27,13 @@ export const reducer  = (state, action) => {
         month: {
           index: state.month.index + 1,
           name: new Date(state.year, state.month.index + 1).toLocaleDateString("default", { month: "long"}),
-          days: 32 - new Date(state.year, state.month.index + 1, 32).getDate()
+          days: 32 - new Date(state.year, state.month.index + 1, 32).getDate(),
+          weeks: getWeeks(
+            (new Date(state.year, state.month.index + 1)).getDay(),
+            32 - new Date(state.year, state.month.index + 1, 32).getDate(),
+            state.year,
+            state.month.index + 1
+          )
         }
       }
     }
@@ -28,7 +42,16 @@ export const reducer  = (state, action) => {
       
       return {
         ...state,
-        year: state.year + 1
+        year: state.year + 1,
+        month: {
+          ...state.month,
+          weeks: getWeeks(
+            (new Date(state.year + 1, state.month.index)).getDay(),
+            32 - new Date(state.year + 1, state.month.index, 32).getDate(),
+            state.year + 1,
+            state.month.index
+          )
+        }
       }
     }
 
@@ -36,7 +59,16 @@ export const reducer  = (state, action) => {
 
       return {
         ...state,
-        year: state.year - 1
+        year: state.year - 1,
+        month: {
+          ...state.month,
+          weeks: getWeeks(
+            (new Date(state.year - 1, state.month.index)).getDay(),
+            32 - new Date(state.year - 1, state.month.index, 32).getDate(),
+            state.year - 1,
+            state.month.index
+          )
+        }
       }
     }
 
@@ -48,7 +80,13 @@ export const reducer  = (state, action) => {
           month: {
             index: 11,
             name: new Date(state.year - 1, 11).toLocaleDateString("default", { month: "long"}),
-            days: 32 - new Date(state.year - 1, 11 , 32).getDate()
+            days: 32 - new Date(state.year - 1, 11 , 32).getDate(),
+            weeks: getWeeks(
+              (new Date(state.year - 1, 11)).getDay(),
+              32 - new Date(state.year - 1, 11, 32).getDate(),
+              state.year - 1,
+              11
+            )
           }
         }
       }
@@ -57,8 +95,34 @@ export const reducer  = (state, action) => {
         month: {
           index: state.month.index - 1,
           name: new Date(state.year, state.month.index - 1).toLocaleDateString("default", { month: "long"}),
-          days: 32 - new Date(state.year, state.month.index -1, 32).getDate()
+          days: 32 - new Date(state.year, state.month.index -1, 32).getDate(),
+          weeks: getWeeks(
+            (new Date(state.year, state.month.index - 1)).getDay(),
+            32 - new Date(state.year, state.month.index - 1, 32).getDate(),
+            state.year,
+            state.month.index - 1
+          )
         }
+      }
+    }
+    case SELECT_DATE: {
+      return {
+        ...state,
+        selectedDate: action.payload.date
+      }
+    }
+    
+    case DISCARD_DATE: {
+      return {
+        ...state,
+        selectDate: null
+      }
+    }
+
+    case TODAY_DATE: {
+      return {
+        ...state,
+        ...initialState
       }
     }
     default: return {...state}

@@ -25,7 +25,7 @@ const YearText =  styled.h3`
 function App() {
   const year = useSelector((state) => state.year);
   const month = useSelector((state) => state.month);
-  console.log(month.weeks)
+  
   return (
     <Container>
       <MonthName>{month.name}</MonthName>

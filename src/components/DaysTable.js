@@ -1,7 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { nextMonth, nextYear, prevMonth, prevYear } from '../redux/actions'
 import styled from 'styled-components';
+import { Day } from './Day';
 
 const daysOfWeek = [
   {id: 0, name:"Sunday"},
@@ -33,28 +32,13 @@ export const DaysTable = ({ weeks, ...props }) => {
       </thead>
       <tbody>
       {weeks?.map( (week, index) => (
-        <tr>
+        <tr key={index}>
           {week?.map( (day, index) => (
-            <td>
-              {day.getDate()}
-            </td>
+            <Day key={index} day={day}/>
           ))}
         </tr>
       ) )}
       </tbody>
     </DaysContainer>
   );
-
-  // return (
-  //   <div>
-  //     <br/>
-  //     <button onClick={()=> dispatch(nextYear())} >next year</button>
-  //     <br/>
-  //     <button onClick={() => dispatch(nextMonth())}>next month</button>
-  //     <br/>
-  //     <button onClick={() => dispatch(prevMonth())} >prev month</button>
-  //     <br/>
-  //     <button onClick={() => dispatch(prevYear())} >prev year</button>
-  //   </div>
-  // )
 }

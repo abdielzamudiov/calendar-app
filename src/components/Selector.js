@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { nextMonth, nextYear, prevMonth, prevYear } from '../redux/actions'
+import { nextMonth, nextYear, prevMonth, prevYear, todayDate } from '../redux/actions'
 import { useDispatch } from 'react-redux';
 
 const SelectorContainer = styled.div`
-  display:flex;
+  display:inline-block;
 `;
 
 export const Selector = ({...props}) => {
@@ -13,9 +13,9 @@ export const Selector = ({...props}) => {
 
   return (
     <SelectorContainer>
-      <button onClick={ () => dispatch(prevMonth())}>{"<"}</button>
       <button onClick={ () => dispatch(prevYear())}>{"<<"}</button>
-      <button onClick={ () => dispatch(prevYear())}>{"Today"}</button>
+      <button onClick={ () => dispatch(prevMonth())}>{"<"}</button>
+      <button onClick={ () => dispatch(todayDate())}>{"Today"}</button>
       <button onClick={ () => dispatch(nextMonth())}>{">"}</button>
       <button onClick={ () => dispatch(nextYear())}>{">>"}</button>
     </SelectorContainer>
