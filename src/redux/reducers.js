@@ -1,4 +1,4 @@
-import { DISCARD_DATE, NEXT_MONTH, NEXT_YEAR, PREV_MONTH, PREV_YEAR, selectDate, SELECT_DATE, TODAY_DATE } from './actions'
+import { DISCARD_DATE, NEXT_MONTH, NEXT_YEAR, PREV_MONTH, PREV_YEAR, SELECT_DATE, TODAY_DATE } from './actions'
 import { getWeeks } from '../helpers/Helpers'
 import { initialState } from '../helpers/Helpers'
 

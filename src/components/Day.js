@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { discardDate, PREV_MONTH, selectDate } from '../redux/actions';
+import { discardDate, selectDate } from '../redux/actions';
 
 const DayTd = styled.td`
   padding: 2rem;
